@@ -164,7 +164,7 @@ const interactiveMode = async () => {
         rl.prompt();
         break;
       case 'version':
-        console.log('pieces-cli version: 1.0.0'); 
+        console.log('pieces-cli version: 1.0.3'); 
         rl.prompt();
         break;
       case 'clear':
