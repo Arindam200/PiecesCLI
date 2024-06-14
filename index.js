@@ -7,9 +7,11 @@ import chalk from 'chalk';
 import readline from 'readline';
 import ora from 'ora';
 import axios from 'axios';
+import pkgJSON from './package.json';
 
 const platform = os.platform();
 const port = platform === 'linux' ? 5323 : 1000;
+const version = pkgJSON.version || '1.0.4';
 
 const configuration = new Pieces.Configuration({
   basePath: `http://localhost:${port}`
@@ -134,7 +136,16 @@ const searchStackOverflow = async (query) => {
 const isInteractiveMode = process.argv.includes("-i") || process.argv.includes("--interactive");
 const isHelp = process.argv.includes("-h") || process.argv.includes("--help");
 const isVersion = process.argv.includes("-v") || process.argv.includes("--version");
-const isModel = process.argv.includes("--model") || process.argv.includes("-m");
+
+if(isHelp){
+  displayHelp();
+  process.exit(0);
+}
+
+if(isVersion){
+  console.log(`pieces-cli version: ${version}`);
+  process.exit(0);
+}
 
 const interactiveMode = async () => {
   const rl = readline.createInterface({
@@ -164,7 +175,7 @@ const interactiveMode = async () => {
         rl.prompt();
         break;
       case 'version':
-        console.log('pieces-cli version: 1.0.3'); 
+        console.log(`pieces-cli version: ${version}`); 
         rl.prompt();
         break;
       case 'clear':
